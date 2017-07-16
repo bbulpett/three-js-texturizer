@@ -11,11 +11,21 @@ renderer.setClearColor(0x3399ff);                             // Set background 
 document.body.appendChild(renderer.domElement);               
 
 // MESH (geometry + material) using Three.js primitive "box" geometry
-var geometry = new THREE.BoxGeometry(5, 5, 5); // (width, height, depth)
-var material = new THREE.MeshLambertMaterial({color: 0xf6546a}) 
-var mesh = new THREE.Mesh(geometry, material)
+// var geometry = new THREE.BoxGeometry(5, 5, 5); // (width, height, depth)
+// var material = new THREE.MeshLambertMaterial({color: 0xf6546a}) 
+// var mesh = new THREE.Mesh(geometry, material)
 
-scene.add(mesh);
+// scene.add(mesh);
+
+var geometry = new THREE.BoxGeometry(5, 5, 5);
+var loader = new THREE.TextureLoader();
+
+loader.load("images/natural_marble_texture.jpg", function(texture){
+  var material = new THREE.MeshLambertMaterial({map: texture});
+  mesh = new THREE.Mesh(geometry, material);
+  scene.add(mesh);
+});
+
 
 // LIGHTING
 var light = new THREE.PointLight(0xffffff, 1.2); //(color, intensity)
@@ -31,7 +41,7 @@ camera.position.z = 10;
 function render() {
   setTimeout( function() {
     requestAnimationFrame(render);
-  }, 1000 / 25 ); // Slow down animation (Default rate of 60 times/second was too fast)
+  }, 25 ); // Slow down animation (Default rate of 60 times/second was too fast)
   mesh.rotation.x += 0.1;
   mesh.rotation.y += 0.1;
   renderer.render(scene, camera);
